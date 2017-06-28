@@ -5,6 +5,9 @@ import PyZenity
 import regex
 import time
 import sys
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, GObject, Pango
 
 r = requests.get('http://api.ttr-invasions.com/json/invasionlist/')
 invkeys = r.json()
@@ -38,16 +41,44 @@ def get_sec(time_str):
             m = '0'
     return int(h) * 3600 + int(m) * 60 + int(s)
 
-def countdown(t):
-    while t:
-        hours, newt = divmod(t, 3600)
-        mins, secs = divmod(newt, 60)
-        timeformat = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
-        print(timeformat, end='\r')
-        time.sleep(1)
-        t -= 1
-
 time_seconds = get_sec(time_split)
-#print(time_split)
-#print(time_seconds)
-countdown(time_seconds)
+
+def countdown(t):
+    hours, newt = divmod(t, 3600)
+    mins, secs = divmod(newt, 60)
+    timeformat = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
+    t -= 1
+    return(timeformat)
+
+class MainWindow(Gtk.Window):
+    t = time_seconds
+    def __init__(self):
+        Gtk.Window.__init__(self, title="TTR Invasion Timer")
+
+        self.box = Gtk.Box(spacing=6)
+        self.add(self.box)
+
+        self.label = Gtk.Label()
+        self.label.modify_font(Pango.FontDescription('Impress BT 90'))
+        self.box.pack_start(self.label, True, True, 0)
+
+        self.set_keep_above(True)
+        self.set_default_size(620, 260)
+
+    # Displays Timer
+    def displayclock(self):
+        datetimenow = countdown(self.t)
+        self.t -= 1
+        self.label.set_label(datetimenow)
+        return True
+
+    # Initialize Timer
+    def startclocktimer(self):
+        GObject.timeout_add(1000, self.displayclock)
+
+
+win = MainWindow()
+win.connect("delete-event", Gtk.main_quit)
+win.show_all()
+win.startclocktimer()
+Gtk.main()
