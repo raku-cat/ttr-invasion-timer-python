@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import requests
+from multiprocessing import Queue
 import json
 import PyZenity
 import regex
