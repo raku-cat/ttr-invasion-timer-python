@@ -4,25 +4,30 @@ An invasion timer app for ToonTown Rewritten made in python.
 
 ## Dependencies
  - Gtk3
- - Zenity
  - Python3
 
 ## Running
- __Linux__
+ #### Linux
  - Clone the repository
  - Run `ttrinvtimer.py`
 
- __Windows__
+ #### Windows
  - [Download](https://github.com/raku-cat/ttr-invasion-timer-python/releases/download/0.1/ttrinvtimer.exe) the precompiled executable
- - Install [zenity-windows](https://github.com/kvaps/zenity-windows/releases/download/v3.20.0-1/zenity-3.20.0_win32-1.exe)
  - Run the executable
 
-## Compilation (for windows)
- __Linux__
+## Compilation (to run on windows)
+ #### Linux
  1. Clone the repository
  2. Edit the `ttrinvtimer.spec` file and set `pathex=['']` to the wine formatted path where you cloned the repository.
- 3. In wine, with [PyInstaller](https://pypi.python.org/pypi/PyInstaller/) installed, run `pyinstaller -F ttrinvtimer.spec`
- The exe should be in `$PATH_OF_REPO/dist/ttrinvtimer.exe`
+ 3. Using an (ideally fresh) 32-bit wine prefix, install python and all the scripts dependencies
+ 4. In wine, with [PyInstaller](https://pypi.python.org/pypi/PyInstaller/) installed, run `pyinstaller -F ttrinvtimer.spec`
+ 
+ #### Windows
+ 1. Clone the repository
+ 2. Edit the `ttrinvtimer.spec` file and set `pathex=['']` to the path where you cloned the repository.
+ 3. Install the dependencies for the script
+ 4. With [PyInstaller](https://pypi.python.org/pypi/PyInstaller/) installed, run `pyinstaller -F ttrinvtimer.spec`
 
- __Windows__
- - None yet
+
+ *The exe should be in `$PATH_OF_REPO/dist/ttrinvtimer.exe`*
+ 
